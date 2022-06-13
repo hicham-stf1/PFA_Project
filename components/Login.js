@@ -41,9 +41,7 @@ export default function Login() {
         currentUser
       )
       router.push('/feed')
-      console.log('user : ' + data)
-      const { user, token } = data
-      localStorage.setItem('user', JSON.stringify(user))
+      const { token } = data
       localStorage.setItem('token', token)
     } catch (error) {
       console.log(error)

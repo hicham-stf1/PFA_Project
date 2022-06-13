@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 
-function NavLink({ to, children, isBackgr }) {
+function NavLink({ to, children, isBackgr, onClick }) {
   return (
     <a
+      onClick={onClick}
       href={to}
       className={`mx-4 p-[5px] font-medium ${
         isBackgr ? 'rounded-md bg-blue-500 text-white' : ''
@@ -12,7 +14,6 @@ function NavLink({ to, children, isBackgr }) {
     </a>
   )
 }
-
 function MobileNav({ open, setOpen }) {
   return (
     <div
@@ -68,6 +69,18 @@ function MobileNav({ open, setOpen }) {
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
+
+  const [token, setToken] = useState('')
+
+  const router = useRouter()
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setToken(localStorage.getItem('token'))
+    }
+  })
+  console.log(token)
+
   return (
     <nav className="sticky top-0 z-50 flex h-20 items-center bg-white px-4 py-4 drop-shadow-md filter">
       <MobileNav open={open} setOpen={setOpen} />
@@ -101,13 +114,28 @@ export default function Navbar() {
           />
         </div>
 
-        <div className="hidden md:flex">
-          <NavLink to="/feed">Feed</NavLink>
-          <NavLink to="/historiques">Historique</NavLink>
-          <NavLink isBackgr="true" to="/">
-            SignOut
+        {token ? (
+          <div className="hidden md:flex">
+            <NavLink to="/feed">Feed</NavLink>
+            <NavLink to="/historiques">Historique</NavLink>
+            <NavLink
+              isBackgr="true"
+              onClick={() => {
+                localStorage.removeItem('token')
+              }}
+              // onClick={() => {
+              //   dispatch(removeToken())
+              // }}
+              to="/"
+            >
+              SignOut
+            </NavLink>
+          </div>
+        ) : (
+          <NavLink isBackgr={true} to="/register">
+            SignUp
           </NavLink>
-        </div>
+        )}
       </div>
     </nav>
   )

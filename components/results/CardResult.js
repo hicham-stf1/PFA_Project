@@ -10,7 +10,7 @@ import useHttp from '../../store/requests.js'
 import { strategicHost } from '../../store/requests.js'
 
 export default function CardResult() {
-  const[objectives,setObjectives]=useState([])
+  const [objectives, setObjectives] = useState([])
   // const dispatch = useDispatch()
   const data = useSelector((state) => state.responses)
   const { responses } = data
@@ -39,7 +39,9 @@ export default function CardResult() {
       <div className=" mt-6  cursor-pointer rounded-xl border-2 p-1 pr-8 ">
         <ResultTitle title="Stratégique" />
         {objectives &&
-          objectives.map((element) => <Result result={element.obj+" "+element.scoreTotal} />)}
+          objectives.map((element) => (
+            <Result result={element.obj + ' ' + element.scoreTotal} />
+          ))}
       </div>
       <div className="mt-2 flex justify-end">
         <Button link="/digitalaudit" text="Passer à l'audit digital" />
