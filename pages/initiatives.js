@@ -6,20 +6,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getMaturityLevels } from '../store/actions/maturityLevelsAction'
 
 function initiatives() {
-  const dispatch = useDispatch()
 
   const data = useSelector((state) => state.maturityLevels)
   const { maturityLevels } = data
-  console.log(maturityLevels)
+  const maturityAverageLevel = 0;
 
-  useEffect(() => {
-    dispatch(getMaturityLevels())
-  }, [dispatch])
 
   return (
     <div className="flex h-full flex-col items-center justify-center ">
-      <Header />
-      <div className="mt-10 flex w-3/5 flex-wrap justify-between rounded-lg border-2 p-4 shadow-2xl">
+      <Header audit="Audit Digital"/>
+      <div className="mt-10 flex w-4/5 flex-wrap justify-between rounded-lg border-2 p-4 shadow-2xl">
         {maturityLevels.length!==0 && <MyRadar data={maturityLevels}/>}
         <Initiatives />
       </div>

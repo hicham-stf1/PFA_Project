@@ -172,7 +172,7 @@ function digitalaudit() {
     <div className="g-6 flex h-full flex-col items-center justify-center">
       <Header audit="Audit Digital" />
       <div className="align-center flex w-full justify-center ">
-        <div className="m-2 p-2 ">
+        <div className="m-2 p-2 flex-[0.55]">
           <Axes axes={digitalAxes} axisCounter={axesCounter} />
           <QuestNumeration
             className="w-full"

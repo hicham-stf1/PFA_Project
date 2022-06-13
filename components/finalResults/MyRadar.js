@@ -14,10 +14,13 @@ function MyRadar({ data }) {
   const { digitalAxes } = AxesData
 
   const [myData, setMyData] = useState([])
+  const [maturityAverageLevel, setMaturityAverageLevel] = useState(0)
 
   useEffect(() => {
     let maturity = []
+    let sum = 0
     for (let key in data) {
+      sum += data[key].level
       maturity.push({
         subject: digitalAxes
           ? digitalAxes.filter((element) => element._id === data[key].axe_id)[0]
@@ -32,6 +35,8 @@ function MyRadar({ data }) {
       })
     }
     setMyData(maturity)
+    setMaturityAverageLevel(sum / maturity.length)
+    console.log(sum / maturity.length)
   }, [data])
 
   return (
@@ -39,14 +44,18 @@ function MyRadar({ data }) {
       <PolarGrid />
       <PolarAngleAxis dataKey="subject" />
       <Radar
-        name="now"
+        name={'now : ' + maturityAverageLevel.toFixed(2)}
         dataKey="A"
         stroke="#8884d8"
         fill="#8884d8"
         fillOpacity={0.6}
       />
       <Radar
-        name="later"
+        name={
+          maturityAverageLevel < 4.01
+            ? 'later : ' + (+maturityAverageLevel.toFixed(2)+1)
+            : 'later : ' + maturityAverageLevel.toFixed(2)
+        }
         dataKey="B"
         stroke="#82ca9d"
         fill="#82ca9d"
